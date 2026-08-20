@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vinyl Y — Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="stage menu-stage">
+
+    <!-- ===== Top Navigation ===== -->
+    <nav class="nav">
+      <div class="nav-left">
+        <a href="index.html" class="logo"><span class="logo-text">Vinyl Y</span></a>
+      </div>
+      <div class="nav-center">
+        <a href="menu.html" class="nav-link is-current">菜單</a>
+        <a href="reservation.html" class="nav-link">訂位須知</a>
+        <a href="#" class="nav-link">品牌故事</a>
+        <a href="restaurant.html" class="nav-link">關於餐廳</a>
+      </div>
+      <a class="nav-toggle" href="menu.html">菜單</a>
+    </nav>
+
+    <!-- ===== Left big fixed image ===== -->
+    <section class="panel menu-hero">
+      <div class="img" style="background-image:url('images/menu-hero.jpg')" role="img" aria-label="炙燒牛排"></div>
+    </section>
+
+    <!-- ===== Right scrollable menu ===== -->
+    <aside class="menu-panel">
+      <div class="menu-scroll">
+
+        <h1 class="menu-title">菜單</h1>
+        <p class="menu-sub">À LA CARTE · 單點</p>
+
+        <!-- 開胃菜 -->
+        <section class="menu-cat">
+          <button class="cat-head" aria-expanded="true">
+            <span>Appetizers <b>開胃菜</b></span>
+            <svg class="chev" viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cat-items">
+            <div class="m-item">
+              <div class="m-name"><span class="en">Sourdough Bread</span><span class="zh">酸種麵包</span></div>
+              <span class="m-lead"></span><span class="m-price">NT$180</span>
+            </div>
+            <div class="m-item has-img">
+              <div class="m-thumb" style="background-image:url('images/dish-charcuterie.jpg?v=2');background-position:center 58%"></div>
+              <div class="m-name"><span class="en">Charcuterie &amp; Cheese Board</span><span class="zh">火腿起司拼盤</span></div>
+              <span class="m-lead"></span><span class="m-price">NT$680</span>
+            </div>
+            <div class="m-item has-img">
+              <div class="m-thumb" style="background-image:url('images/燻鮭魚沙拉.jpg');background-position:center 60%"></div>
+              <div class="m-name"><span class="en">Smoked Salmon Salad</span><span class="zh">燻鮭魚沙拉</span></div>
+              <span class="m-lead"></span><span class="m-price">NT$420</span>
+            </div>
+            <div class="m-item">
+              <div class="m-name"><span class="en">Burrata Cheese Salad</span><span class="zh">布拉塔起司沙拉</span></div>
+              <span class="m-lead"></span><span class="m-price">NT$380</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 前菜 -->
+        <section class="menu-cat">
+          <button class="cat-head" aria-expanded="true">
+            <span>Starters <b>前菜</b></span>
+            <svg class="chev" viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cat-items">
+            <div class="m-item"><div class="m-name"><span class="en">House-made Sausage</span><span class="zh">自製香腸</span></div><span class="m-lead"></span><span class="m-price">NT$320</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Roasted Brussels Sprouts</span><span class="zh">苞子甘藍</span></div><span class="m-lead"></span><span class="m-price">NT$280</span></div>
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/油封鴨腿.jpg');background-position:center 50%"></div><div class="m-name"><span class="en">Duck Confit</span><span class="zh">油封鴨腿</span></div><span class="m-lead"></span><span class="m-price">NT$620</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Garlic French Fries</span><span class="zh">蒜味薯條</span></div><span class="m-lead"></span><span class="m-price">NT$280</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Seasonal Vegetables</span><span class="zh">綜合時蔬</span></div><span class="m-lead"></span><span class="m-price">NT$320</span></div>
+          </div>
+        </section>
+
+        <!-- 肉類 -->
+        <section class="menu-cat">
+          <button class="cat-head" aria-expanded="true">
+            <span>Meat <b>肉類</b></span>
+            <svg class="chev" viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cat-items">
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/A5%20和牛.jpg?v=2');background-position:center 52%"></div><div class="m-name"><span class="en">A5 Wagyu Beef (4oz)</span><span class="zh">A5 和牛</span></div><span class="m-lead"></span><span class="m-price">NT$1280</span></div>
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/澳洲和牛紐約客.jpg');background-position:center 72%"></div><div class="m-name"><span class="en">Australian Wagyu New York Strip (10oz)</span><span class="zh">澳洲和牛紐約客</span></div><span class="m-lead"></span><span class="m-price">NT$1880</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Australian Wagyu Oyster Blade (10oz)</span><span class="zh">澳洲和牛翼板</span></div><span class="m-lead"></span><span class="m-price">NT$1780</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">New Zealand Lamb Rack (4oz)</span><span class="zh">紐西蘭羊鞍</span></div><span class="m-lead"></span><span class="m-price">NT$880</span></div>
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/美國%20Prime%20帶骨肋眼.png');background-position:center 55%"></div><div class="m-name"><span class="en">USDA Prime Bone-In Ribeye Steak (20oz)</span><span class="zh">美國 Prime 帶骨肋眼</span></div><span class="m-lead"></span><span class="m-price">NT$2680</span></div>
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/小牛肋排.jpg');background-position:center 52%"></div><div class="m-name"><span class="en">Veal Chop</span><span class="zh">小牛肋排</span></div><span class="m-lead"></span><span class="m-price">NT$880</span></div>
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/法式烤雞.jpg');background-position:center 52%"></div><div class="m-name"><span class="en">French Roasted Chicken</span><span class="zh">法式烤雞</span></div><span class="m-lead"></span><span class="m-price">NT$1480</span></div>
+          </div>
+        </section>
+
+        <!-- 主食 -->
+        <section class="menu-cat">
+          <button class="cat-head" aria-expanded="true">
+            <span>Pasta &amp; Risotto <b>主食</b></span>
+            <svg class="chev" viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cat-items">
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/dish-spaghetti.jpg');background-position:center 50%"></div><div class="m-name"><span class="en">Seafood Spaghetti</span><span class="zh">海鮮義大利麵</span></div><span class="m-lead"></span><span class="m-price">NT$580</span></div>
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/dish-pasta2.jpg');background-position:center 58%"></div><div class="m-name"><span class="en">Braised Beef Shell Pasta</span><span class="zh">燉牛肉貝殼麵</span></div><span class="m-lead"></span><span class="m-price">NT$480</span></div>
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/dish-risotto.jpg');background-position:center 60%"></div><div class="m-name"><span class="en">Abalone Risotto</span><span class="zh">鮑魚燉飯</span></div><span class="m-lead"></span><span class="m-price">NT$620</span></div>
+          </div>
+        </section>
+
+        <!-- 海鮮 -->
+        <section class="menu-cat">
+          <button class="cat-head" aria-expanded="true">
+            <span>Seafood <b>海鮮</b></span>
+            <svg class="chev" viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cat-items">
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/香煎鮮魚.jpg');background-position:center 52%"></div><div class="m-name"><span class="en">Pan-seared Fresh Fish</span><span class="zh">香煎鮮魚</span></div><span class="m-lead"></span><span class="m-price">NT$1280</span></div>
+            <div class="m-item has-img"><div class="m-thumb" style="background-image:url('images/青醬透抽.jpg');background-position:center 55%"></div><div class="m-name"><span class="en">Grilled Squid with Pesto</span><span class="zh">青醬透抽</span></div><span class="m-lead"></span><span class="m-price">NT$420</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Scallop and Cauliflower Bisque</span><span class="zh">干貝白花椰濃湯</span></div><span class="m-lead"></span><span class="m-price">NT$420</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Chilean Sea Bass</span><span class="zh">圓鱈魚</span></div><span class="m-lead"></span><span class="m-price">NT$1580</span></div>
+            <div class="m-item has-img">
+              <div class="m-thumb" style="background-image:url('images/碳烤章魚.jpg');background-position:center 62%"></div>
+              <div class="m-name"><span class="en">Chargrilled Octopus</span><span class="zh">碳烤章魚</span></div>
+              <span class="m-lead"></span><span class="m-price">NT$560</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 飲料 -->
+        <section class="menu-cat">
+          <button class="cat-head" aria-expanded="true">
+            <span>Beverages <b>飲料</b></span>
+            <svg class="chev" viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cat-items">
+            <div class="m-item"><div class="m-name"><span class="en">Apple Juice</span><span class="zh">蘋果汁</span></div><span class="m-lead"></span><span class="m-price">NT$120</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Americano</span><span class="zh">美式咖啡</span></div><span class="m-lead"></span><span class="m-price">NT$120</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Caffe Latte</span><span class="zh">拿鐵</span></div><span class="m-lead"></span><span class="m-price">NT$160</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Black Tea</span><span class="zh">紅茶</span></div><span class="m-lead"></span><span class="m-price">NT$120</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Milk Tea</span><span class="zh">奶茶</span></div><span class="m-lead"></span><span class="m-price">NT$160</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Acqua Panna Still Water</span><span class="zh">普娜礦泉水</span></div><span class="m-lead"></span><span class="m-price">NT$150</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">S.Pellegrino Sparkling Water</span><span class="zh">聖佩黎洛氣泡水</span></div><span class="m-lead"></span><span class="m-price">NT$150</span></div>
+          </div>
+        </section>
+
+        <!-- 啤酒 -->
+        <section class="menu-cat">
+          <button class="cat-head" aria-expanded="true">
+            <span>Beer <b>啤酒</b></span>
+            <svg class="chev" viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cat-items">
+            <div class="m-item"><div class="m-name"><span class="en">Estrella Damm</span><span class="zh">西班牙金星</span></div><span class="m-lead"></span><span class="m-price">NT$760</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Suntory Premium Malt's</span><span class="zh">三得利頂級啤酒</span></div><span class="m-lead"></span><span class="m-price">NT$240</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Asahi Draft Beer</span><span class="zh">Asahi 生啤酒</span></div><span class="m-lead"></span><span class="m-price">NT$210</span></div>
+          </div>
+        </section>
+
+        <!-- 甜點 -->
+        <section class="menu-cat">
+          <button class="cat-head" aria-expanded="true">
+            <span>Dessert <b>甜點</b></span>
+            <svg class="chev" viewBox="0 0 24 24" width="20" height="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="cat-items">
+            <div class="m-item"><div class="m-name"><span class="en">Chocolate Cake</span><span class="zh">巧克力蛋糕</span></div><span class="m-lead"></span><span class="m-price">NT$160</span></div>
+            <div class="m-item"><div class="m-name"><span class="en">Vanilla Mille Crepe Cake</span><span class="zh">千層蛋糕</span></div><span class="m-lead"></span><span class="m-price">NT$160</span></div>
+          </div>
+        </section>
+
+      </div>
+    </aside>
+
+  </main>
+
+  <script>
+    // 分類可收合
+    document.querySelectorAll('.cat-head').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        btn.parentElement.classList.toggle('is-collapsed', open);
+      });
+    });
+  </script>
+</body>
+</html>

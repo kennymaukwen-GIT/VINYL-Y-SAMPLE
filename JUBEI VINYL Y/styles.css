@@ -1,0 +1,870 @@
+/* ============================================================
+   Gusto — Home page
+   純 HTML + CSS。圖片區塊用 .img-* class，之後把 background-image
+   換成你的圖檔即可（見下方「圖片替換區」）。
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gap: 8px;
+  --radius: 20px;
+
+  --bg: #0C0E09;
+  --panel: #13160F;
+  --card: #1B1F16;
+  --cream: #efe9da;
+  --cream-text: #1b1a17;
+
+  --text: #f2ede3;
+  --text-dim: #b9b3a8;
+  --text-mute: #7d766c;
+  --line: #171a15;
+}
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Stage：整頁的 bento 版面 ===== */
+.stage {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  padding: var(--gap);
+  display: grid;
+  grid-template-columns: 2.9fr 1fr;
+  grid-template-rows: minmax(0, 1fr);
+  gap: var(--gap);
+}
+
+/* 進場動畫：由下往上浮現，透明度由淺至深，速度由快至慢 */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(44px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 分段進場（全站）：左側大圖先浮現，右側面板接著出現 */
+.stage > .nav,
+.stage > .panel,
+.stage > aside {
+  animation: page-enter 1.3s cubic-bezier(.22, 1, .36, 1) both;
+}
+.stage > aside { animation-delay: .45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .stage > .nav,
+  .stage > .panel,
+  .stage > aside { animation: none; }
+}
+
+/* ===== 導覽列（浮在最上層） ===== */
+/* 導覽列做成左上角深色圓角 tab（右下大圓角，融進 hero 圖） */
+.nav {
+  position: absolute;
+  top: 0; left: 0;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding: 11px 32px 13px 28px;
+  background: var(--bg);
+  border-radius: 18px 0 22px 0;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 23px;
+  color: #f3efe8;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.logo-mark { flex: 0 0 auto; display: block; }
+.logo-text { line-height: 1; }
+
+.nav-center {
+  display: flex;
+  gap: 34px;
+}
+.nav-link {
+  color: #f4f0e8;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: .92;
+  transition: opacity .2s ease;
+}
+.nav-link:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+/* 漢堡選單鈕：僅手機版顯示 */
+.nav-toggle { display: none; }
+
+/* ===== 面板通用 ===== */
+.panel {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card);
+}
+.img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 左側大圖輪播 */
+.slides { position: absolute; inset: 0; }
+.slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+.slide.is-active { opacity: 1; }
+
+/* 輪播箭頭 */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: .9;
+  transition: opacity .2s ease;
+}
+.arrow:hover { opacity: 1; }
+.arrow-left  { left: 10px; }
+.arrow-right { right: 10px; }
+
+/* 輪播圓點 */
+.dots {
+  position: absolute;
+  left: 50%; bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  gap: 9px;
+}
+.dot {
+  width: 8px; height: 8px;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.4);
+  cursor: pointer;
+  transition: background .2s ease, width .2s ease;
+}
+.dot.is-active { background: #ffffff; }
+
+/* © Vinyl Y 實境拍攝：右下角深色圓角底 */
+.since {
+  position: absolute;
+  right: 14px; bottom: 12px;
+  z-index: 5;
+  color: rgba(255,255,255,.92);
+  font-size: 14px;
+  letter-spacing: .3px;
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(4px);
+  padding: 8px 16px;
+  border-radius: 14px;
+}
+
+/* ===== 右側欄 ===== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-height: 0;
+}
+
+.media {
+  position: relative;
+  flex: 0.9 1 0;
+  min-height: 0;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+}
+.media .img {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  transition: filter .4s ease, transform .5s ease;
+}
+/* hover：圖片模糊＋微放大 */
+.media:hover .img { filter: blur(5px) brightness(.9); transform: scale(1.06); }
+
+/* 標籤做成左上角的深色圓角頁籤（tab），疊在圖片上 */
+.media-label {
+  position: absolute;
+  top: 0; left: 0;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1;
+  padding: 9px 20px 12px 8px;
+  border-radius: 16px 0 16px 0;
+}
+/* hover：標籤旁滑出箭頭 */
+.lbl-arrow {
+  width: 0;
+  opacity: 0;
+  margin-left: 0;
+  transform: translateX(-4px);
+  overflow: hidden;
+  transition: width .3s ease, opacity .3s ease, margin-left .3s ease, transform .3s ease;
+}
+.media:hover .lbl-arrow {
+  width: 16px;
+  opacity: 1;
+  margin-left: 8px;
+  transform: translateX(0);
+}
+
+/* Book a Table 按鈕 */
+.book-btn {
+  flex: 0 0 auto;
+  height: 60px;
+  border: none;
+  border-radius: 16px;
+  background: var(--cream);
+  color: var(--cream-text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.book-btn:hover { background: #fff; }
+
+/* 營業時間卡 */
+.hours {
+  flex: 1.65 1 0;
+  min-height: 0;
+  background: var(--card);
+  border-radius: 18px;
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.hours-title {
+  color: var(--text-mute);
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+.hours-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding-top: 4px;
+}
+.hours-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 4px 0;
+}
+.hours-row .day  { color: var(--text); font-size: 16px; }
+.hours-row .time { color: var(--text-dim); font-size: 15px; white-space: nowrap; }
+.hours-row .time-stack { text-align: right; line-height: 1.4; }
+.hours-row .lead {
+  flex: 1;
+  border-bottom: 1px dotted var(--line);
+  transform: translateY(-4px);
+}
+
+/* ============================================================
+   圖片替換區：把下面每個 url() 換成你的圖檔即可
+   （建議放在同資料夾的 images/ 底下）
+   目前先用漸層佔位，方便看版面。
+   ============================================================ */
+.img-autumn {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.35)),
+    linear-gradient(135deg, #b98b2e 0%, #6d5a34 45%, #2c2a26 100%);
+  /* background-image: url('images/hero-autumn.jpg'); */
+}
+.img-flour {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.45)),
+    linear-gradient(135deg, #4a3f36 0%, #2a231e 60%, #171310 100%);
+  /* background-image: url('images/hero-flour.jpg'); */
+}
+.img-restaurant {
+  background-image: url('images/side-restaurant.jpg?v=2');
+}
+.img-menu {
+  background-image: url('images/side-menu.jpg?v=2');
+  background-position: center 62%;
+}
+
+/* 佔位提示文字：定稿時關閉，讓畫面乾淨（放真圖後不影響） */
+.img::after { content: none; }
+
+/* ============================================================
+   MENU 頁：左側固定大圖 + 右側可捲動清單
+   ============================================================ */
+.menu-stage { grid-template-columns: 1fr 1.08fr; }
+
+.menu-hero { overflow: hidden; }
+.menu-hero .img { position: absolute; inset: 0; }
+
+.nav-link.is-current { text-decoration: underline; text-underline-offset: 4px; opacity: 1; }
+
+.menu-panel {
+  background: var(--panel);
+  border-radius: var(--radius);
+  overflow-y: auto;
+  min-height: 0;
+}
+.menu-scroll { padding: 78px 40px 40px; }
+
+.menu-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 26px;
+}
+.menu-intro {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 22px 26px;
+  color: var(--text-dim);
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 26px;
+}
+
+.menu-sub {
+  color: var(--text-mute);
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin: -14px 0 26px;
+}
+
+.cat-head span b { font-weight: 400; color: var(--text-dim); margin-left: 8px; }
+
+/* 菜單文字列（雙語 + 價格） */
+/* 卡片式列（左縮圖 + 菜名 + 價格） */
+.m-item {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  background: var(--card);
+  border-radius: 16px;
+  padding: 23px 29px 23px 21px;
+}
+.m-item .m-thumb {
+  flex: 0 0 auto;
+  width: 133px; height: 106px;
+  border-radius: 13px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 有圖的菜品：整寬大圖在上，菜名與價格排在下方 */
+.m-item.has-img {
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.m-item.has-img .m-thumb {
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  border-radius: 0;
+}
+.m-item.has-img .m-name  { padding: 20px 0 22px 24px; }
+.m-item.has-img .m-price { padding: 20px 26px 22px 16px; }
+.m-name { flex: 1; min-width: 0; }
+.m-name .en {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 24px;
+  color: #fff;
+  line-height: 1.25;
+}
+.m-name .zh { display: block; color: var(--text-dim); font-size: 15px; margin-top: 6px; }
+.m-lead { display: none; }
+.m-price {
+  flex: 0 0 auto;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 23px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.menu-cat { margin-bottom: 16px; }
+.cat-head {
+  width: 100%;
+  background: var(--card);
+  border: none;
+  border-radius: 16px;
+  padding: 22px 27px;
+  color: var(--text);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.cat-head .chev { transition: transform .25s ease; color: var(--text-dim); }
+.menu-cat.is-collapsed .cat-head .chev { transform: rotate(-90deg); }
+
+.cat-items { overflow: hidden; display: flex; flex-direction: column; gap: 16px; }
+.menu-cat.is-collapsed .cat-items { display: none; }
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 8px;
+  border-bottom: 1px solid var(--line);
+}
+.menu-item .thumb {
+  flex: 0 0 auto;
+  width: 118px; height: 86px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+}
+.menu-item .info { flex: 1; min-width: 0; }
+.menu-item .name {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.menu-item .desc { color: var(--text-dim); font-size: 15px; line-height: 1.5; }
+.menu-item .price {
+  flex: 0 0 auto;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 21px;
+  color: var(--text);
+  margin-left: 16px;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   餐廳環境頁：左側大圖 + 右側資訊欄（可捲動）
+   ============================================================ */
+.env-stage { grid-template-columns: 2.6fr 1fr; }
+
+.env-hero { overflow: hidden; }
+.env-hero .img { position: absolute; inset: 0; }
+
+.env-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.info-card {
+  flex: 0 0 auto;
+  background: var(--card);
+  border-radius: 18px;
+  padding: 20px 24px;
+}
+.info-title {
+  display: block;
+  color: var(--text-mute);
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+.info-text { color: var(--text); font-size: 16px; line-height: 1.7; }
+
+.info-block + .info-block {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.info-hours { list-style: none; }
+
+.info-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  font-size: 16px;
+  text-decoration: none;
+  padding: 8px 0;
+}
+.info-link svg { color: var(--text-dim); flex: 0 0 auto; }
+.info-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.env-map {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 220px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--card);
+}
+.env-map iframe {
+  width: 100%; height: 100%; border: 0; display: block;
+  /* 夜間版：把亮色地圖轉成深色（Google 免費嵌入無官方暗色模式） */
+  filter: invert(0.92) hue-rotate(180deg) saturate(0.75) contrast(0.9) brightness(0.95);
+}
+.map-open {
+  position: absolute;
+  right: 10px; bottom: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 13px;
+  padding: 8px 13px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.map-open:hover { background: rgba(0,0,0,.88); }
+
+/* ============================================================
+   訂位頁：左側大圖 + 右側 inline 訂位
+   ============================================================ */
+.reserve-stage { grid-template-columns: 1.35fr 1fr; }
+
+.reserve-hero { overflow: hidden; }
+.reserve-hero .img { position: absolute; inset: 0; }
+
+.reserve-panel {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 74px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-height: 0;
+}
+.reserve-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 54px;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 18px;
+}
+.reserve-intro {
+  color: var(--text-dim);
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 26px;
+}
+/* 訂位表單 */
+.rf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 22px;
+  margin-bottom: 26px;
+}
+.rf-field { display: flex; flex-direction: column; }
+.rf-label {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 19px;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.rf-input {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  color-scheme: dark;
+}
+.rf-input::placeholder { color: var(--text-mute); }
+.rf-input:focus { outline: none; border-color: var(--text-dim); }
+
+.reserve-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 4px;
+}
+.reserve-note {
+  color: var(--text-mute);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* 底部浮動訂位按鈕（貼齊右側面板寬度，吸附在最下方） */
+.fab-reserve {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  width: 100%;
+  flex: 0 0 auto;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--cream);
+  color: var(--cream-text);
+  text-decoration: none;
+  height: 60px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 10px 28px rgba(0,0,0,.5);
+  transition: background .2s ease;
+}
+.fab-reserve:hover { background: #fff; }
+
+/* 訂位須知（notice-panel）*/
+.notice-panel .info-card + .info-card { margin-top: var(--gap); }
+.notice-panel .info-block > * + * { margin-top: 8px; }
+.notice-panel .info-text { font-size: 15px; line-height: 1.6; }
+.notice-panel .info-link { padding: 2px 0; }
+
+.hours-row .time-stack i {
+  display: block;
+  font-style: normal;
+  font-size: 12px;
+  color: var(--text-mute);
+  margin-top: 3px;
+}
+
+.notice-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.notice-list li {
+  position: relative;
+  padding-left: 17px;
+  color: var(--text-dim);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.notice-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-mute);
+}
+
+.tel-inline {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.price-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.price-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.price-list li span:first-child {
+  color: var(--text);
+  font-size: 15px;
+}
+.price-list li span:last-child {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--text);
+  white-space: nowrap;
+}
+.price-list li span:last-child i {
+  font-style: normal;
+  font-size: 13px;
+  color: var(--text-mute);
+  margin-left: 3px;
+}
+
+/* ============================================================
+   RWD：窄螢幕改為單欄堆疊
+   ============================================================ */
+@media (max-width: 900px) {
+  /* 拍攝標記：手機版縮小一點 */
+  .since {
+    right: 8px; bottom: 7px;
+    font-size: 6px;
+    letter-spacing: .15px;
+    padding: 3px 6px;
+    border-radius: 6px;
+  }
+
+  .stage {
+    height: auto;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;   /* 大圖直接頂到最上方，導覽標籤疊在圖上形成缺角 */
+  }
+
+  /* 卡片尺寸：以固定長寬比呈現，任何機型比例都一致 */
+  .hero {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 5 / 4;
+    border-radius: 16px;
+  }
+  .media {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 8 / 5;
+    border-radius: 16px;
+  }
+  .media .img { border-radius: 16px; }
+  .sidebar { gap: 10px; }
+  .hours { flex: 0 0 auto; border-radius: 16px; padding: 22px 24px; }
+
+  /* 首頁卡片順序：大圖 → 訂位須知 → 菜單 → 關於餐廳 → 營業時間 */
+  .sidebar .book-btn    { order: 1; height: 56px; border-radius: 16px; }
+  .sidebar .media-menu  { order: 2; }
+  .sidebar .media-about { order: 3; }
+  .sidebar .hours       { order: 4; }
+
+  /* 手機版導覽列：左右兩塊深色圓角標籤，中間看得見內容 */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+  }
+  .nav-left {
+    background: var(--bg);
+    padding: 12px 24px 14px 16px;
+    border-radius: 0 0 20px 0;
+  }
+  .logo { font-size: 22px; }
+
+  /* 右上角標籤：直接連到菜單頁 */
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px 16px 17px 26px;
+    background: var(--bg);
+    border-radius: 0 0 0 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .nav-center { display: none; }
+
+  /* MENU 頁窄螢幕：大圖在上，清單接著往下捲 */
+  .menu-stage { grid-template-columns: 1fr; }
+  .menu-hero { height: auto; min-height: 0; aspect-ratio: 5 / 4; border-radius: 16px; }
+  .menu-panel { overflow: visible; }
+  .menu-scroll { padding: 24px 20px 32px; }
+  .menu-title { font-size: 44px; }
+
+  /* 菜品卡片：縮小縮圖與字級，避免窄螢幕擠成一團 */
+  .cat-head { font-size: 20px; padding: 18px 20px; }
+  .m-item {
+    gap: 14px;
+    padding: 15px 18px 15px 15px;
+    border-radius: 14px;
+  }
+  .m-item .m-thumb { width: 84px; height: 68px; border-radius: 10px; }
+  .m-name .en { font-size: 17px; line-height: 1.3; }
+  .m-name .zh { font-size: 13px; margin-top: 4px; }
+  .m-price { font-size: 17px; }
+
+  /* 有圖的菜品在手機同樣是大圖在上、菜名在下 */
+  .m-item.has-img { padding: 0; }
+  .m-item.has-img .m-thumb { width: 100%; height: auto; border-radius: 0; }
+  .m-item.has-img .m-name  { padding: 14px 0 16px 16px; }
+  .m-item.has-img .m-price { padding: 14px 18px 16px 12px; }
+
+  /* 餐廳環境頁窄螢幕 */
+  .env-stage { grid-template-columns: 1fr; }
+  .env-hero { height: auto; min-height: 0; aspect-ratio: 5 / 4; border-radius: 16px; }
+  .env-panel { overflow: visible; }
+
+  /* 訂位頁窄螢幕 */
+  .reserve-stage { grid-template-columns: 1fr; }
+  .reserve-hero { height: auto; min-height: 0; aspect-ratio: 5 / 4; border-radius: 16px; }
+  .reserve-panel { overflow: visible; padding: 28px 22px 32px; }
+  .reserve-title { font-size: 40px; }
+  .reserve-embed { min-height: 560px; }
+
+  /* 浮動訂位鈕：吸附在畫面底部，並留出空間避免蓋住內容
+     （註：外層面板有進場 transform，會成為 fixed 的定位基準，故用 sticky） */
+  .fab-reserve {
+    bottom: 14px;
+    height: 56px;
+    margin-top: 0;
+  }
+  .notice-panel { padding-bottom: 88px; }
+}
