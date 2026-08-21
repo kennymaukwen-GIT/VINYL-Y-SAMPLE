@@ -807,8 +807,19 @@ body {
   }
   .logo { font-size: 22px; }
 
-  /* 右上角「菜單」標籤：手機版隱藏 */
-  .nav-toggle { display: none; }
+  /* 右上角「返回首頁」按鈕（僅內頁手機版顯示） */
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 22px;
+    background: var(--bg);
+    border-radius: 0 0 0 20px;
+    color: var(--text);
+    text-decoration: none;
+    line-height: 0;
+  }
+  .nav-toggle svg { display: block; }
 
   .nav-center { display: none; }
 
